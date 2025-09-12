@@ -34,14 +34,18 @@ export function Navigation({ currentPage, onPageChange }: NavigationProps) {
 
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 navbar-smooth ${
         isScrolled 
-          ? 'bg-surface-elevated/95 backdrop-blur-xl shadow-lg border-b border-neutral-bg' 
-          : 'bg-surface-elevated/90 backdrop-blur-sm'
+          ? 'bg-surface-elevated/95 backdrop-blur-xl shadow-lg border-b border-neutral-bg transform translate-y-0' 
+          : 'bg-surface-elevated/90 backdrop-blur-sm transform translate-y-0'
       }`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ 
+        duration: 1.2, 
+        ease: [0.25, 0.1, 0.25, 1],
+        delay: 0.2 
+      }}
     >
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-24">

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import * as d3 from "d3"
+import { globePreloader } from "../../utils/globePreloader"
 
 interface RotatingEarthProps {
   width?: number
@@ -13,6 +14,7 @@ export default function RotatingEarth({ width = 1200, height = 800, className = 
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [loadingMessage, setLoadingMessage] = useState("Initializing Globe...")
 
   useEffect(() => {
     if (!canvasRef.current) return
@@ -98,16 +100,17 @@ export default function RotatingEarth({ width = 1200, height = 800, className = 
       return false
     }
 
-    const generateDotsInPolygon = (feature: any, dotSpacing = 16) => {
+    const generateDotsInPolygon = (feature: any, dotSpacing = 20) => {
       const dots: [number, number][] = []
       const bounds = d3.geoBounds(feature)
       const [[minLng, minLat], [maxLng, maxLat]] = bounds
 
-      const stepSize = dotSpacing * 0.08
+      const stepSize = dotSpacing * 0.1 // Increased step size for faster generation
       let pointsGenerated = 0
+      const maxPoints = 1000 // Limit max points per feature for performance
 
-      for (let lng = minLng; lng <= maxLng; lng += stepSize) {
-        for (let lat = minLat; lat <= maxLat; lat += stepSize) {
+      for (let lng = minLng; lng <= maxLng && pointsGenerated < maxPoints; lng += stepSize) {
+        for (let lat = minLat; lat <= maxLat && pointsGenerated < maxPoints; lat += stepSize) {
           const point: [number, number] = [lng, lat]
           if (pointInFeature(point, feature)) {
             dots.push(point)
@@ -191,30 +194,45 @@ export default function RotatingEarth({ width = 1200, height = 800, className = 
       try {
         setIsLoading(true)
 
-        const response = await fetch(
-          "https://raw.githubusercontent.com/martynafford/natural-earth-geojson/refs/heads/master/110m/physical/ne_110m_land.json",
-        )
-        if (!response.ok) throw new Error("Failed to load land data")
+        // Try to get cached data first for instant loading
+        const cachedData = globePreloader.getCachedGlobeData();
+        
+        if (cachedData) {
+          // Use preloaded data for instant rendering
+          console.log('🌍 Using preloaded globe data for instant display');
+          setLoadingMessage("Ready!");
+          
+          landFeatures = { features: cachedData.features };
+          
+          // Clear existing dots and use preloaded ones
+          allDots.length = 0;
+          allDots.push(...cachedData.dots);
+          
+          render();
+          
+          // Minimal delay to show "Ready!" message
+          setTimeout(() => setIsLoading(false), 200);
+          return;
+        }
 
-        landFeatures = await response.json()
+        // Fallback: Load data on demand if preloading failed
+        console.log('⏳ Loading globe data on demand...');
+        setLoadingMessage("Loading Globe Data...");
+        
+        const globeData = await globePreloader.preloadGlobeData();
+        
+        landFeatures = { features: globeData.features };
+        allDots.length = 0;
+        allDots.push(...globeData.dots);
 
-        // Generate dots for all land features
-        let totalDots = 0
-        landFeatures.features.forEach((feature: any) => {
-          const dots = generateDotsInPolygon(feature, 16)
-          dots.forEach(([lng, lat]) => {
-            allDots.push({ lng, lat, visible: true })
-            totalDots++
-          })
-        })
+        console.log(`🌍 Globe loaded with ${globeData.dots.length} dots across ${globeData.features.length} land features`);
 
-        console.log(`[v0] Total dots generated: ${totalDots} across ${landFeatures.features.length} land features`)
-
-        render()
-        setIsLoading(false)
+        render();
+        setIsLoading(false);
       } catch (err) {
-        setError("Failed to load land map data")
-        setIsLoading(false)
+        console.error('Failed to load globe data:', err);
+        setError("Failed to load land map data");
+        setIsLoading(false);
       }
     }
 
@@ -253,9 +271,30 @@ export default function RotatingEarth({ width = 1200, height = 800, className = 
 
   return (
     <div className={`relative ${className}`}>
+      {/* Loading overlay with fade zoom-out effect */}
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center globe-loading-overlay z-10 rounded-2xl">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-gold-accent border-t-transparent rounded-full animate-spin animate-pulse-glow mx-auto"></div>
+            <p className="text-gold-accent text-center mt-4 animate-fade-in font-medium">{loadingMessage}</p>
+          </div>
+        </div>
+      )}
+      
+      {/* Globe placeholder when loading */}
+      {isLoading && (
+        <div className="w-full h-auto rounded-2xl bg-gradient-to-br from-navy-primary/20 to-blue-supportive/20 animate-pulse flex items-center justify-center min-h-[400px]">
+          <div className="w-64 h-64 rounded-full border-2 border-dashed border-gold-accent/30 animate-pulse"></div>
+        </div>
+      )}
+      
       <canvas
         ref={canvasRef}
-        className="w-full h-auto rounded-2xl bg-transparent"
+        className={`w-full h-auto rounded-2xl bg-transparent transition-all duration-1000 ease-out animate-zoom-out ${
+          isLoading 
+            ? 'opacity-0 scale-110 blur-sm absolute inset-0' 
+            : 'opacity-100 scale-100 blur-0 relative'
+        }`}
         style={{ maxWidth: "100%", height: "auto" }}
       />
     </div>

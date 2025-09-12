@@ -3,6 +3,9 @@ import { motion, AnimatePresence } from 'motion/react';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
+// Import preloader to start globe data loading immediately
+import { globePreloader } from './utils/globePreloader';
+
 // Import all components directly to avoid dynamic import issues
 import { Navigation } from './components/Navigation';
 import { Hero } from './components/Hero';
@@ -30,6 +33,14 @@ const LoadingSpinner = ({ message = "Loading..." }: { message?: string }) => (
       />
       <h2 className="text-xl font-semibold text-navy-primary mb-2">Ali Bin Fahad Law Firm</h2>
       <p className="text-gold-accent text-sm" aria-live="polite">{message}</p>
+      <motion.p 
+        className="text-xs text-neutral-muted mt-2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+      >
+        Preparing your experience...
+      </motion.p>
     </motion.div>
   </div>
 );
@@ -52,8 +63,27 @@ export default function App() {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
-    // Simple initialization
-    const timer = setTimeout(() => setIsInitialLoad(false), 600);
+    // Start globe preloading immediately during initial load
+    const initializeApp = async () => {
+      try {
+        // Start globe preloading in background (fire and forget)
+        globePreloader.preloadGlobeData().then(() => {
+          console.log('🌍 Globe ready for instant display');
+        }).catch(error => {
+          console.warn('Globe preloading failed, will load on demand:', error);
+        });
+
+        // Minimum loading time for smooth UX
+        await new Promise(resolve => setTimeout(resolve, 800));
+        
+        setIsInitialLoad(false);
+      } catch (error) {
+        console.error('App initialization error:', error);
+        setIsInitialLoad(false);
+      }
+    };
+
+    initializeApp();
 
     // Basic SEO setup
     const updatePageTitle = () => {
@@ -67,10 +97,6 @@ export default function App() {
     };
 
     updatePageTitle();
-
-    return () => {
-      clearTimeout(timer);
-    };
   }, [currentPage]);
 
   const handlePageChange = useCallback((page: string) => {
