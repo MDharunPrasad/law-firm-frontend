@@ -56,7 +56,7 @@ function WhyUs() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <motion.div
-          className={`text-center mb-16 lg:mb-20 ${isRTL ? 'text-right' : 'text-left'}`}
+          className="text-center mb-16 lg:mb-20"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -91,32 +91,68 @@ function WhyUs() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -8 }}
+                whileHover={{ 
+                  y: -16, 
+                  scale: 1.03,
+                  transition: { 
+                    duration: 0.18, 
+                    ease: [0.23, 1, 0.32, 1] // Slightly slower for better feel
+                  } 
+                }}
               >
-                <div className={`relative h-full ${item.bgColor} rounded-2xl lg:rounded-3xl p-6 lg:p-8 transition-all duration-500 group-hover:shadow-2xl border border-gray-100 overflow-hidden`}>
-                  {/* Gradient overlay on hover */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-95 transition-opacity duration-500 rounded-2xl lg:rounded-3xl`} />
-                  
+                <div className={`relative h-full ${item.bgColor} rounded-2xl lg:rounded-3xl p-6 lg:p-8 transition-all duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:shadow-2xl border border-gray-100 overflow-hidden will-change-transform`}>
                   {/* Content */}
-                  <div className="relative z-10">
+                  <div className="relative z-20">
                     <div className={`flex ${isRTL ? 'justify-end' : 'justify-start'} mb-6`}>
-                      <div className="p-4 bg-white rounded-2xl shadow-lg group-hover:shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:bg-white/95">
-                        <IconComponent className={`h-8 w-8 lg:h-10 lg:w-10 text-gray-700 group-hover:text-gray-800 transition-colors duration-500 relative z-20`} />
+                      <div className="p-4 bg-white backdrop-blur-md rounded-2xl shadow-lg group-hover:shadow-2xl transition-all duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-110 group-hover:bg-white border-2 border-white/30 group-hover:border-white">
+                        <IconComponent className={`h-8 w-8 lg:h-10 lg:w-10 text-gray-700 group-hover:text-gray-900 transition-colors duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] relative z-30 font-bold`} />
                       </div>
                     </div>
                     
-                    <h3 className={`text-xl lg:text-2xl font-bold text-navy-primary mb-4 leading-tight group-hover:text-white transition-colors duration-500 ${isRTL ? 'text-right' : 'text-left'}`}>
+                    {/* Title - keeping original colors */}
+                    <h3 className={`text-xl lg:text-2xl font-bold text-navy-primary mb-4 leading-tight transition-all duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] ${isRTL ? 'text-right' : 'text-left'}`}>
                       {item.title}
                     </h3>
                     
-                    <p className={`text-neutral-muted leading-relaxed group-hover:text-white/90 transition-colors duration-500 ${isRTL ? 'text-right' : 'text-left'}`}>
+                    {/* Description - keeping original colors */}
+                    <p className={`text-neutral-muted font-medium leading-relaxed transition-all duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] ${isRTL ? 'text-right' : 'text-left'}`}>
                       {item.description}
                     </p>
                   </div>
 
-                  {/* Decorative elements */}
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -translate-y-10 translate-x-10 group-hover:scale-150 transition-transform duration-700" />
-                  <div className="absolute bottom-0 left-0 w-16 h-16 bg-white/5 rounded-full translate-y-8 -translate-x-8 group-hover:scale-125 transition-transform duration-700" />
+                  {/* Subtle decorative elements */}
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-white/4 rounded-full -translate-y-12 translate-x-12 group-hover:scale-150 group-hover:bg-white/8 transition-all duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] will-change-transform" />
+                  <div className="absolute bottom-0 left-0 w-20 h-20 bg-white/4 rounded-full translate-y-10 -translate-x-10 group-hover:scale-125 group-hover:bg-white/8 transition-all duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] will-change-transform" />
+                  
+                  {/* Glowing border effect with CSS */}
+                  <div className={`absolute inset-0 rounded-2xl lg:rounded-3xl border-2 border-transparent group-hover:border-current transition-all duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:shadow-[0_0_20px_rgba(59,130,246,0.5),0_0_40px_rgba(59,130,246,0.3),0_0_60px_rgba(59,130,246,0.1)]`} 
+                    style={{
+                      '--tw-shadow-color': index === 0 ? 'rgb(59 130 246)' : 
+                                           index === 1 ? 'rgb(16 185 129)' : 
+                                           index === 2 ? 'rgb(168 85 247)' : 
+                                           index === 3 ? 'rgb(249 115 22)' : 
+                                           index === 4 ? 'rgb(239 68 68)' : 
+                                           'rgb(20 184 166)',
+                      borderColor: 'transparent'
+                    } as React.CSSProperties}
+                    onMouseEnter={(e) => {
+                      const colors = [
+                        'rgb(59 130 246)',   // blue
+                        'rgb(16 185 129)',   // emerald  
+                        'rgb(168 85 247)',   // purple
+                        'rgb(249 115 22)',   // orange
+                        'rgb(239 68 68)',    // red
+                        'rgb(20 184 166)'    // teal
+                      ];
+                      const color = colors[index] || colors[0];
+                      e.currentTarget.style.borderColor = color;
+                      e.currentTarget.style.boxShadow = `0 0 20px ${color.replace('rgb', 'rgba').replace(')', ', 0.5)')}, 0 0 40px ${color.replace('rgb', 'rgba').replace(')', ', 0.3)')}, 0 0 60px ${color.replace('rgb', 'rgba').replace(')', ', 0.1)')}`;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = 'transparent';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                  />
                 </div>
               </motion.div>
             );
