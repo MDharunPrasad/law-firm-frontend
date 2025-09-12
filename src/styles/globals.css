@@ -1,0 +1,462 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  --background: #ffffff;
+  --foreground: #142241;
+  --card: #ffffff;
+  --card-foreground: #142241;
+  --popover: #ffffff;
+  --popover-foreground: #142241;
+  --primary: #142241;
+  --primary-foreground: #ffffff;
+  --secondary: #f7f7f9;
+  --secondary-foreground: #142241;
+  --muted: #f7f7f9;
+  --muted-foreground: #6b7280;
+  --accent: #c59a3f;
+  --accent-foreground: #ffffff;
+  --destructive: #d4183d;
+  --destructive-foreground: #ffffff;
+  --border: rgba(20, 34, 65, 0.1);
+  --input: transparent;
+  --input-background: #f7f7f9;
+  --switch-background: #cbced4;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #c59a3f;
+  --chart-1: #142241;
+  --chart-2: #2b4f81;
+  --chart-3: #c59a3f;
+  --chart-4: #6b7280;
+  --chart-5: #f7f7f9;
+  
+  /* Modern Professional Law Firm Colors */
+  --navy-primary: #1e293b; /* Slate 800 - Professional dark blue */
+  --navy-deep: #0f172a; /* Slate 900 - Deep professional navy */
+  --gold-accent: #f59e0b; /* Amber 500 - Warm professional gold */
+  --blue-supportive: #334155; /* Slate 700 - Supporting blue-gray */
+  --neutral-white: #ffffff;
+  --neutral-bg: #f8fafc; /* Slate 50 - Clean background */
+  --neutral-muted: #64748b; /* Slate 500 - Professional muted text */
+  --accent-hover: #d97706; /* Amber 600 - Hover state for gold */
+  --surface-elevated: #ffffff; /* White for cards and elevated surfaces */
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: #030213;
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  
+  /* Modern Professional Law Firm Colors */
+  --color-navy-primary: var(--navy-primary);
+  --color-navy-deep: var(--navy-deep);
+  --color-gold-accent: var(--gold-accent);
+  --color-blue-supportive: var(--blue-supportive);
+  --color-neutral-white: var(--neutral-white);
+  --color-neutral-bg: var(--neutral-bg);
+  --color-neutral-muted: var(--neutral-muted);
+  --color-accent-hover: var(--accent-hover);
+  --color-surface-elevated: var(--surface-elevated);
+}
+
+/* Critical fonts - preload these */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  /* Professional serif for headings with font-display swap for performance */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-display: swap;
+  }
+  
+  /* Clean sans-serif for body text with font-display swap for performance */
+  body, p, span, div, a, button, input, textarea, label {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-display: swap;
+  }
+
+  /* Performance optimizations - apply selectively */
+  body, h1, h2, h3, h4, h5, h6, p {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Prevent iOS zoom on form inputs */
+  input, textarea, select, button {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+
+  /* Prevent layout thrashing */
+  img, video, iframe {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Optimize scrolling performance */
+  * {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Critical rendering path optimization */
+  .above-fold {
+    contain: layout style paint;
+  }
+
+  /* Optimize repaints */
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .will-change-opacity {
+    will-change: opacity;
+  }
+
+  /* Critical CSS for above-the-fold content */
+  .hero-section {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #142241 0%, #2b4f81 50%, #172554 100%);
+  }
+
+  /* Optimize images for performance and prevent layout shift */
+  img {
+    max-width: 100%;
+    height: auto;
+    loading: lazy;
+    /* Prevent layout shift */
+    vertical-align: middle;
+    /* Improve rendering performance */
+    image-rendering: optimizeQuality;
+    /* Smooth loading transitions */
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Loading states for images */
+  img[loading="lazy"]:not(.loaded) {
+    opacity: 0;
+  }
+  
+  img[loading="lazy"].loaded,
+  img[loading="eager"] {
+    opacity: 1;
+  }
+  
+  /* Reduce layout shift with proper aspect ratios */
+  .aspect-video {
+    aspect-ratio: 16/9;
+  }
+  
+  .aspect-square {
+    aspect-ratio: 1/1;
+  }
+
+  /* Performance optimizations for animations - apply selectively */
+  .smooth-transform, 
+  .gpu-accelerated,
+  [data-motion-component] {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* Optimize animations for performance */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      transform: none !important;
+    }
+  }
+
+  /* GPU acceleration classes */
+  .smooth-transform {
+    transform: translateZ(0);
+    will-change: transform, opacity;
+  }
+
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform, opacity, filter;
+    contain: layout style paint;
+  }
+
+  /* Optimized hover states */
+  .hover-lift {
+    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px) translateZ(0);
+  }
+
+  /* Text truncation utilities */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    :root {
+      --navy-primary: #000000;
+      --navy-deep: #000000;
+      --gold-accent: #ffb000;
+      --neutral-muted: #333333;
+      --border: #000000;
+    }
+  }
+
+  /* Dark mode support (system preference) */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --neutral-bg: #0f172a;
+      --surface-elevated: #1e293b;
+      --neutral-muted: #94a3b8;
+    }
+  }
+
+  /* Focus indicators for accessibility */
+  *:focus {
+    outline: 2px solid var(--gold-accent);
+    outline-offset: 2px;
+  }
+
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-gold-accent focus:ring-offset-2;
+  }
+
+  /* Screen reader only content */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: inherit;
+  }
+
+  /* Loading animations */
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  
+  .animate-shimmer {
+    animation: shimmer 2s infinite linear;
+    background: linear-gradient(90deg, 
+      rgba(226, 232, 240, 0.5) 25%, 
+      rgba(148, 163, 184, 0.5) 50%, 
+      rgba(226, 232, 240, 0.5) 75%
+    );
+    background-size: 200% 100%;
+  }
+
+  /* Enhanced image loading optimization */
+  .image-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .image-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+      rgba(226, 232, 240, 0.5) 25%, 
+      rgba(148, 163, 184, 0.5) 50%, 
+      rgba(226, 232, 240, 0.5) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite linear;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  
+  .image-container.loaded::before {
+    opacity: 0;
+  }
+
+  /* RTL support */
+  [dir="rtl"] {
+    text-align: right;
+  }
+  
+  [dir="rtl"] .flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+}
+
+/**
+ * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
+ */
+@layer base {
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h2 {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h4 {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    p {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+
+    label {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    button {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    input {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}
