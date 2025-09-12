@@ -100,8 +100,8 @@ function WhyUs() {
                   {/* Content */}
                   <div className="relative z-10">
                     <div className={`flex ${isRTL ? 'justify-end' : 'justify-start'} mb-6`}>
-                      <div className="p-4 bg-white rounded-2xl shadow-lg group-hover:shadow-xl transition-all duration-500 group-hover:scale-110">
-                        <IconComponent className={`h-8 w-8 lg:h-10 lg:w-10 text-gray-700 group-hover:text-white transition-colors duration-500`} />
+                      <div className="p-4 bg-white rounded-2xl shadow-lg group-hover:shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:bg-white/95">
+                        <IconComponent className={`h-8 w-8 lg:h-10 lg:w-10 text-gray-700 group-hover:text-gray-800 transition-colors duration-500 relative z-20`} />
                       </div>
                     </div>
                     

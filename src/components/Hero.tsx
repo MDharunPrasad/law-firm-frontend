@@ -18,11 +18,11 @@ export function Hero({ onContactClick }: HeroProps) {
   ];
 
   return (
-    <section className="relative min-h-screen flex items-center bg-gradient-to-br from-navy-primary via-blue-supportive to-navy-deep overflow-hidden">
+    <section className="relative h-screen lg:h-[120vh] flex items-center bg-gradient-to-br from-navy-primary via-blue-supportive to-navy-deep overflow-hidden pt-24">
       {/* Professional background - zero external dependencies, instant loading */}
       <ProfessionalBackground variant="hero" />
 
-      <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 pt-20">
+      <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <div className={`text-white ${isRTL ? 'text-right' : 'text-left'}`}>
@@ -30,6 +30,7 @@ export function Hero({ onContactClick }: HeroProps) {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
+              style={{ paddingTop: '50px' }}
             >
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
                 {t('hero.title')}
@@ -65,9 +66,22 @@ export function Hero({ onContactClick }: HeroProps) {
               <Button
                 variant="outline"
                 size="lg"
-                className="border-white text-white hover:bg-white hover:text-black px-8 py-4"
+                className="border-2 border-white px-8 py-4 bg-transparent backdrop-blur-sm transition-all duration-300 hover:bg-white group"
+                style={{ 
+                  color: 'white', 
+                  borderColor: 'white',
+                  '--hover-text-color': '#000000'
+                } as React.CSSProperties}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#000000';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = 'white';
+                }}
               >
-                {t('hero.services')}
+                <span className="group-hover:text-black transition-colors duration-300">
+                  {t('hero.services')}
+                </span>
               </Button>
             </motion.div>
 
@@ -77,6 +91,7 @@ export function Hero({ onContactClick }: HeroProps) {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
+              style={{ marginBottom: '50px' }}
             >
               {stats.map((stat, index) => {
                 const Icon = stat.icon;

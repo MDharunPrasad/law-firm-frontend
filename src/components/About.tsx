@@ -158,8 +158,8 @@ export function About({ showCoreValues = false }: AboutProps) {
                     {/* Content */}
                     <div className="relative z-10">
                       <div className={`flex ${isRTL ? 'justify-end' : 'justify-center'} mb-6`}>
-                        <div className="p-4 bg-white rounded-2xl shadow-lg group-hover:shadow-xl transition-all duration-200 group-hover:scale-105">
-                          <Icon className={`h-8 w-8 lg:h-10 lg:w-10 ${value.iconColor} group-hover:text-white transition-colors duration-200`} />
+                        <div className="p-4 bg-white rounded-2xl shadow-lg group-hover:shadow-xl transition-all duration-200 group-hover:scale-105 group-hover:bg-white/95">
+                          <Icon className={`h-8 w-8 lg:h-10 lg:w-10 ${value.iconColor} group-hover:text-gray-800 transition-colors duration-200`} />
                         </div>
                       </div>
                       

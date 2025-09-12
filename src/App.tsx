@@ -115,7 +115,6 @@ export default function App() {
           return (
             <PageWrapper>
               <Hero onContactClick={handleContactClick} />
-              <Services onServiceClick={handleServiceClick} showHeader={false} />
               <About showCoreValues={true} />
             </PageWrapper>
           );
