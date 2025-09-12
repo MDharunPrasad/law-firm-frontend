@@ -3,7 +3,7 @@ import { AlertTriangle, RefreshCw, Home, Phone, Mail } from 'lucide-react';
 import { Button } from './ui/button';
 
 interface FallbackComponentProps {
-  error?: Error;
+  error?: Error | null;
   resetError?: () => void;
   message?: string;
   showContactInfo?: boolean;

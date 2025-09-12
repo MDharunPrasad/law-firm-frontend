@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, Suspense } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
@@ -115,6 +115,7 @@ export default function App() {
           return (
             <PageWrapper>
               <Hero onContactClick={handleContactClick} />
+              <Services onServiceClick={handleServiceClick} showHeader={false} />
               <About showCoreValues={true} />
             </PageWrapper>
           );

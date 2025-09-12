@@ -84,7 +84,7 @@ function Services({ onServiceClick, showHeader = false }: ServicesProps) {
   ];
 
   return (
-    <section className="py-20 bg-neutral-bg">
+    <section className="py-20 bg-gradient-to-b from-neutral-bg to-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header - only show when specified */}
         {showHeader && (
@@ -112,12 +112,12 @@ function Services({ onServiceClick, showHeader = false }: ServicesProps) {
             return (
               <motion.div
                 key={service.title}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0.8, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                viewport={{ once: true, margin: "-50px" }}
               >
-                <Card className="h-full group hover:shadow-xl transition-all duration-300 border-0 bg-white hover:-translate-y-2">
+                <Card className="h-full group hover:shadow-xl transition-all duration-300 border border-neutral-muted/10 bg-white shadow-md hover:-translate-y-2">
                   <CardHeader className="pb-4">
                     <div className="flex items-center mb-4">
                       <div className="p-3 bg-gold-accent/10 rounded-xl group-hover:bg-gold-accent/20 transition-colors">
