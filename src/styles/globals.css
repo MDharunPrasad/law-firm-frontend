@@ -13,7 +13,7 @@
   --secondary: #f7f7f9;
   --secondary-foreground: #142241;
   --muted: #f7f7f9;
-  --muted-foreground: #6b7280;
+  --muted-foreground: #475569;
   --accent: #c59a3f;
   --accent-foreground: #ffffff;
   --destructive: #d4183d;
@@ -31,15 +31,15 @@
   --chart-4: #6b7280;
   --chart-5: #f7f7f9;
   
-  /* Modern Professional Law Firm Colors */
+  /* Modern Professional Law Firm Colors - Enhanced Contrast */
   --navy-primary: #1e293b; /* Slate 800 - Professional dark blue */
   --navy-deep: #0f172a; /* Slate 900 - Deep professional navy */
-  --gold-accent: #f59e0b; /* Amber 500 - Warm professional gold */
+  --gold-accent: #d97706; /* Amber 600 - Enhanced contrast for accessibility */
   --blue-supportive: #334155; /* Slate 700 - Supporting blue-gray */
   --neutral-white: #ffffff;
   --neutral-bg: #f8fafc; /* Slate 50 - Clean background */
-  --neutral-muted: #64748b; /* Slate 500 - Professional muted text */
-  --accent-hover: #d97706; /* Amber 600 - Hover state for gold */
+  --neutral-muted: #475569; /* Slate 600 - Darker for better contrast */
+  --accent-hover: #b45309; /* Amber 700 - Darker hover state */
   --surface-elevated: #ffffff; /* White for cards and elevated surfaces */
   --radius: 0.625rem;
   --sidebar: oklch(0.985 0 0);
@@ -476,4 +476,44 @@ html {
     1px 1px 3px rgba(0,0,0,0.8),
     0 2px 8px rgba(0,0,0,0.7),
     1px 1px 1px rgba(0,0,0,1) !important;
+}
+
+/* Accessibility improvements */
+.high-contrast-text {
+  color: #1e293b !important; /* Very dark for high contrast */
+}
+
+.high-contrast-muted {
+  color: #374151 !important; /* Darker gray for better readability */
+}
+
+.high-contrast-link {
+  color: #b45309 !important; /* Darker amber for better contrast */
+}
+
+.high-contrast-link:hover {
+  color: #92400e !important;
+}
+
+/* Focus states for accessibility */
+.focus-visible:focus {
+  outline: 2px solid #d97706 !important;
+  outline-offset: 2px !important;
+}
+
+/* Skip to content link */
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #1e293b;
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 100;
+  border-radius: 4px;
+}
+
+.skip-to-content:focus {
+  top: 6px;
 }

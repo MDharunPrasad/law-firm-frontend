@@ -1,19 +1,50 @@
-import React, { useState, useEffect, useCallback, Suspense } from 'react';
+import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
-// Import all components directly to avoid dynamic import issues
+// Immediate load for critical above-the-fold components
 import { Navigation } from './components/Navigation';
 import { Hero } from './components/Hero';
-import { About } from './components/About';
 import { Footer } from './components/Footer';
 import { FloatingActions } from './components/FloatingActions';
-import Services from './components/Services';
-import Team from './components/Team';
-import Testimonials from './components/Testimonials';
-import Contact from './components/Contact';
-import WhyUs from './components/WhyUs';
+
+// Lazy load heavy components for better performance
+const About = lazy(() => import('./components/About').then(m => ({ default: m.About })));
+const Services = lazy(() => import('./components/Services'));
+const Team = lazy(() => import('./components/Team'));
+const Testimonials = lazy(() => import('./components/Testimonials'));
+const Contact = lazy(() => import('./components/Contact'));
+const WhyUs = lazy(() => import('./components/WhyUs'));
+
+// SEO and Accessibility improvements
+useEffect(() => {
+  // Register service worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+      .then((registration) => {
+        console.log('SW registered: ', registration);
+      })
+      .catch((registrationError) => {
+        console.log('SW registration failed: ', registrationError);
+      });
+  }
+
+  // Add skip to content link
+  const skipLink = document.createElement('a');
+  skipLink.href = '#main-content';
+  skipLink.className = 'skip-to-content';
+  skipLink.textContent = 'Skip to main content';
+  skipLink.setAttribute('aria-label', 'Skip to main content');
+  document.body.insertBefore(skipLink, document.body.firstChild);
+
+  return () => {
+    // Cleanup on unmount
+    if (document.body.contains(skipLink)) {
+      document.body.removeChild(skipLink);
+    }
+  };
+}, []);
 
 // Simple loading component
 const LoadingSpinner = ({ message = "Loading..." }: { message?: string }) => (
@@ -54,6 +85,28 @@ export default function App() {
   useEffect(() => {
     // Simple initialization
     const timer = setTimeout(() => setIsInitialLoad(false), 600);
+
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then((registration) => {
+          console.log('SW registered: ', registration);
+        })
+        .catch((registrationError) => {
+          console.log('SW registration failed: ', registrationError);
+        });
+    }
+
+    // Add skip to content link
+    let skipLink = document.querySelector('.skip-to-content') as HTMLAnchorElement;
+    if (!skipLink) {
+      skipLink = document.createElement('a');
+      skipLink.href = '#main-content';
+      skipLink.className = 'skip-to-content';
+      skipLink.textContent = 'Skip to main content';
+      skipLink.setAttribute('aria-label', 'Skip to main content');
+      document.body.insertBefore(skipLink, document.body.firstChild);
+    }
 
     // Basic SEO setup
     const updatePageTitle = () => {
