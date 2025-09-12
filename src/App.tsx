@@ -17,35 +17,6 @@ const Testimonials = lazy(() => import('./components/Testimonials'));
 const Contact = lazy(() => import('./components/Contact'));
 const WhyUs = lazy(() => import('./components/WhyUs'));
 
-// SEO and Accessibility improvements
-useEffect(() => {
-  // Register service worker
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js')
-      .then((registration) => {
-        console.log('SW registered: ', registration);
-      })
-      .catch((registrationError) => {
-        console.log('SW registration failed: ', registrationError);
-      });
-  }
-
-  // Add skip to content link
-  const skipLink = document.createElement('a');
-  skipLink.href = '#main-content';
-  skipLink.className = 'skip-to-content';
-  skipLink.textContent = 'Skip to main content';
-  skipLink.setAttribute('aria-label', 'Skip to main content');
-  document.body.insertBefore(skipLink, document.body.firstChild);
-
-  return () => {
-    // Cleanup on unmount
-    if (document.body.contains(skipLink)) {
-      document.body.removeChild(skipLink);
-    }
-  };
-}, []);
-
 // Simple loading component
 const LoadingSpinner = ({ message = "Loading..." }: { message?: string }) => (
   <div className="min-h-screen bg-neutral-bg flex items-center justify-center" role="status" aria-live="polite">
