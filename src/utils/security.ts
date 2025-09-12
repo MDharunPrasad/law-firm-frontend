@@ -1,5 +1,14 @@
 // Security utilities for form validation and sanitization
 
+interface ValidationRule {
+  required?: boolean;
+  minLength?: number;
+  maxLength?: number;
+  validator?: (value: string) => boolean;
+}
+
+type ValidationSchema = Record<string, ValidationRule>;
+
 export class SecurityUtils {
   // Input sanitization
   static sanitizeInput(input: string): string {
@@ -176,7 +185,7 @@ export class FormSecurity {
   private static rateLimiter = SecurityUtils.createRateLimiter(3, 10 * 60 * 1000); // 3 requests per 10 minutes
   private static csrfTokens = new Set<string>();
 
-  static validateForm(formData: Record<string, any>, schema: any): { isValid: boolean; errors: string[] } {
+  static validateForm(formData: Record<string, any>, schema: ValidationSchema): { isValid: boolean; errors: string[] } {
     const errors: string[] = [];
 
     for (const [field, rules] of Object.entries(schema)) {
