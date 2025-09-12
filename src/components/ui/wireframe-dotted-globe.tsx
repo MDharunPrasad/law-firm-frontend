@@ -191,12 +191,33 @@ export default function RotatingEarth({ width = 1200, height = 800, className = 
       try {
         setIsLoading(true)
 
-        const response = await fetch(
-          "https://raw.githubusercontent.com/martynafford/natural-earth-geojson/refs/heads/master/110m/physical/ne_110m_land.json",
-        )
-        if (!response.ok) throw new Error("Failed to load land data")
-
-        landFeatures = await response.json()
+        // Try to fetch the data, but handle CSP errors gracefully
+        let landFeatures;
+        try {
+          const response = await fetch(
+            "https://raw.githubusercontent.com/martynafford/natural-earth-geojson/refs/heads/master/110m/physical/ne_110m_land.json",
+          )
+          if (!response.ok) throw new Error("Failed to load land data")
+          landFeatures = await response.json()
+        } catch (fetchError) {
+          console.warn("Could not load external geodata, using fallback:", fetchError)
+          // Create a simple fallback world data
+          landFeatures = {
+            type: "FeatureCollection",
+            features: [
+              {
+                type: "Feature",
+                properties: { featurecla: "Land" },
+                geometry: {
+                  type: "Polygon",
+                  coordinates: [[
+                    [-180, -60], [180, -60], [180, 60], [-180, 60], [-180, -60]
+                  ]]
+                }
+              }
+            ]
+          }
+        }
 
         // Generate dots for all land features
         let totalDots = 0
