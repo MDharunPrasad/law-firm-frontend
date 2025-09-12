@@ -3,6 +3,7 @@ import { Award, Clock, Users, Target, Shield, Lightbulb, Heart, Eye } from 'luci
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Button } from './ui/button';
+import { ShaderAnimation } from './ui/shader-animation';
 
 interface AboutProps {
   showCoreValues?: boolean;
@@ -181,7 +182,7 @@ export function About({ showCoreValues = false }: AboutProps) {
 
           {/* Mission Statement */}
           <motion.div
-            className="bg-gradient-to-r from-navy-primary to-blue-supportive rounded-2xl lg:rounded-3xl p-8 lg:p-12 text-center relative overflow-hidden"
+            className="bg-gradient-to-r from-navy-primary to-blue-supportive rounded-2xl lg:rounded-3xl p-8 lg:p-12 text-center relative overflow-hidden mb-16"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -211,6 +212,25 @@ export function About({ showCoreValues = false }: AboutProps) {
               >
                 {t('about.consultation.button')}
               </Button>
+            </div>
+          </motion.div>
+
+          {/* Shader Animation Section */}
+          <motion.div
+            className="relative h-[400px] md:h-[500px] lg:h-[600px] w-full flex items-center justify-center overflow-hidden rounded-xl border border-gray-200 bg-navy-primary"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <ShaderAnimation />
+            <div className="absolute pointer-events-none z-10 text-center px-4">
+              <h3 className="text-2xl md:text-4xl lg:text-6xl leading-none font-bold tracking-tight text-white mb-4">
+                Legal Innovation
+              </h3>
+              <p className="text-white/80 text-sm md:text-base lg:text-lg max-w-2xl mx-auto">
+                Cutting-edge technology meets traditional legal excellence
+              </p>
             </div>
           </motion.div>
         </motion.div>
