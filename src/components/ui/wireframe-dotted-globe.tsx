@@ -192,6 +192,26 @@ export default function RotatingEarth({ width = 1200, height = 800, className = 
         setIsLoading(true)
 
         // Try to fetch the data, but handle CSP errors gracefully
+        const cachedData = globePreloader.getCachedGlobeData();
+        
+        if (cachedData) {
+          // Use preloaded data for instant rendering
+          console.log('🌍 Using preloaded globe data for instant display');
+          setLoadingMessage("Ready!");
+          
+          landFeatures = { features: cachedData.features };
+          
+          // Clear existing dots and use preloaded ones
+          allDots.length = 0;
+          allDots.push(...cachedData.dots);
+          
+          render();
+          
+          // Minimal delay to show "Ready!" message
+          setTimeout(() => setIsLoading(false), 200);
+          return;
+=======
+        // Try to fetch the data, but handle CSP errors gracefully
         let landFeatures;
         try {
           const response = await fetch(
@@ -217,6 +237,7 @@ export default function RotatingEarth({ width = 1200, height = 800, className = 
               }
             ]
           }
+
         }
 
         // Generate dots for all land features
