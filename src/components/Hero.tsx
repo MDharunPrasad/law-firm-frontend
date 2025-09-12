@@ -3,6 +3,7 @@ import { Button } from './ui/button';
 import { ArrowRight, Scale, Shield, Users } from 'lucide-react';
 import { ProfessionalBackground } from './ProfessionalBackground';
 import { useLanguage } from '../contexts/LanguageContext';
+import RotatingEarth from './ui/wireframe-dotted-globe';
 
 interface HeroProps {
   onContactClick: () => void;
@@ -106,45 +107,18 @@ export function Hero({ onContactClick }: HeroProps) {
             </motion.div>
           </div>
 
-          {/* Trust Badges */}
+          {/* Rotating Globe */}
           <motion.div
             className="hidden lg:block"
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 1 }}
           >
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8">
-              <h3 className="text-xl font-semibold text-white mb-6">Certified & Trusted</h3>
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gold-accent/20 rounded-lg flex items-center justify-center">
-                    <Shield className="h-6 w-6 text-gold-accent" />
-                  </div>
-                  <div>
-                    <div className="text-white font-medium">Saudi Bar Association</div>
-                    <div className="text-gray-300 text-sm">Licensed & Certified</div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gold-accent/20 rounded-lg flex items-center justify-center">
-                    <Scale className="h-6 w-6 text-gold-accent" />
-                  </div>
-                  <div>
-                    <div className="text-white font-medium">Ministry of Justice</div>
-                    <div className="text-gray-300 text-sm">Authorized Practice</div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gold-accent/20 rounded-lg flex items-center justify-center">
-                    <Users className="h-6 w-6 text-gold-accent" />
-                  </div>
-                  <div>
-                    <div className="text-white font-medium">SAIP Registered</div>
-                    <div className="text-gray-300 text-sm">Intellectual Property</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <RotatingEarth 
+              width={600} 
+              height={600} 
+              className="w-full max-w-lg mx-auto"
+            />
           </motion.div>
         </div>
       </div>
