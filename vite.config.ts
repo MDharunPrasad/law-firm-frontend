@@ -86,12 +86,15 @@
       sourcemap: true,
     },
     server: {
-      port: 3000,
+      port: 3002,
       open: true,
       hmr: {
-        port: 3000,
+        port: 3003,
         host: 'localhost'
       },
-      host: true
+      host: 'localhost',
+      watch: {
+        usePolling: true
+      }
     },
   });

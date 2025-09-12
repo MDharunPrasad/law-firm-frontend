@@ -3,9 +3,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
-// Import preloader to start globe data loading immediately
-import { globePreloader } from './utils/globePreloader';
-
 // Immediate load for critical above-the-fold components
 import { Navigation } from './components/Navigation';
 import { Hero } from './components/Hero';
