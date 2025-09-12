@@ -212,10 +212,25 @@ function Services({ onServiceClick, showHeader = false }: ServicesProps) {
                     <Button
                       variant="outline"
                       size="lg" 
-                      className="border-2 border-white text-white hover:bg-white hover:text-navy-primary backdrop-blur-sm px-8 py-4 font-semibold transition-all duration-300 hover:scale-105"
+                      className="border-2 border-white bg-transparent backdrop-blur-sm px-8 py-4 font-semibold transition-all duration-300 hover:scale-105 group hover:bg-white"
+                      style={{ color: 'white', borderColor: 'white' }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.color = '#1e293b';
+                        const icon = e.currentTarget.querySelector('svg');
+                        const span = e.currentTarget.querySelector('span');
+                        if (icon) icon.style.color = '#1e293b';
+                        if (span) span.style.color = '#1e293b';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.color = 'white';
+                        const icon = e.currentTarget.querySelector('svg');
+                        const span = e.currentTarget.querySelector('span');
+                        if (icon) icon.style.color = 'white';
+                        if (span) span.style.color = 'white';
+                      }}
                     >
-                      <Phone className={`${isRTL ? 'ml-2' : 'mr-2'} h-5 w-5`} />
-                      <span className="text-white group-hover:text-navy-primary">{t('services.cta.call')}</span>
+                      <Phone className={`${isRTL ? 'ml-2' : 'mr-2'} h-5 w-5 transition-colors duration-300`} style={{ color: 'white' }} />
+                      <span className="transition-colors duration-300" style={{ color: 'white' }}>{t('services.cta.call')}</span>
                     </Button>
                   </motion.div>
                 </div>
