@@ -52,6 +52,49 @@ const PageWrapper = ({ children, className = "" }: { children: React.ReactNode; 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  // Handle scroll background animation
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = Math.min(scrollTop / Math.max(docHeight * 0.3, 500), 1);
+      setScrollProgress(progress);
+    };
+
+    let ticking = false;
+    const throttledScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', throttledScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', throttledScroll);
+  }, []);
+
+  // Calculate background color
+  const getBackgroundColor = () => {
+    const whiteRgb = { r: 248, g: 250, b: 252 };
+    const darkRgb = { r: 30, g: 41, b: 59 };
+    
+    const easeProgress = scrollProgress < 0.5 
+      ? 2 * scrollProgress * scrollProgress 
+      : 1 - Math.pow(-2 * scrollProgress + 2, 3) / 2;
+    
+    const r = Math.round(whiteRgb.r + (darkRgb.r - whiteRgb.r) * easeProgress);
+    const g = Math.round(whiteRgb.g + (darkRgb.g - whiteRgb.g) * easeProgress);
+    const b = Math.round(whiteRgb.b + (darkRgb.b - whiteRgb.b) * easeProgress);
+    
+    return `rgb(${r}, ${g}, ${b})`;
+  };
 
   useEffect(() => {
     // Simple initialization
@@ -208,38 +251,59 @@ export default function App() {
   return (
     <ErrorBoundary>
       <LanguageProvider>
-        <div className="min-h-screen bg-neutral-bg antialiased">
-          {/* Skip to main content for accessibility */}
-          <a 
-            href="#main-content" 
-            className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-gold-accent text-navy-primary px-4 py-2 rounded-lg font-medium z-50"
-          >
-            Skip to main content
-          </a>
-
-          <Navigation currentPage={currentPage} onPageChange={handlePageChange} />
+        <div className="relative min-h-screen">
+          {/* Fixed background that transitions smoothly */}
+          <motion.div
+            className="fixed inset-0 z-0"
+            style={{
+              backgroundColor: getBackgroundColor(),
+            }}
+            initial={{ backgroundColor: 'rgb(248, 250, 252)' }}
+          />
           
-          <main id="main-content" role="main">
-            <AnimatePresence 
-              mode="wait" 
-              onExitComplete={() => {
-                try {
-                  window.scrollTo(0, 0);
-                } catch (error) {
-                  console.warn('Failed to scroll to top:', error);
-                }
-              }}
+          {/* Progress indicator */}
+          <motion.div
+            className="fixed top-0 left-0 h-0.5 bg-gradient-to-r from-gold-accent to-gold-accent/60 z-50"
+            style={{
+              width: `${scrollProgress * 100}%`,
+              opacity: scrollProgress > 0.05 ? 0.8 : 0,
+            }}
+            transition={{ opacity: { duration: 0.3 } }}
+          />
+          
+          <div className="relative z-10 min-h-screen antialiased">
+            {/* Skip to main content for accessibility */}
+            <a 
+              href="#main-content" 
+              className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-gold-accent text-navy-primary px-4 py-2 rounded-lg font-medium z-50"
             >
-              <ErrorBoundary>
-                <Suspense fallback={<LoadingSpinner message="Loading page..." />}>
-                  {renderPage()}
-                </Suspense>
-              </ErrorBoundary>
-            </AnimatePresence>
-          </main>
-          
-          <Footer onPageChange={handlePageChange} />
-          <FloatingActions />
+              Skip to main content
+            </a>
+
+            <Navigation currentPage={currentPage} onPageChange={handlePageChange} />
+            
+            <main id="main-content" role="main">
+              <AnimatePresence 
+                mode="wait" 
+                onExitComplete={() => {
+                  try {
+                    window.scrollTo(0, 0);
+                  } catch (error) {
+                    console.warn('Failed to scroll to top:', error);
+                  }
+                }}
+              >
+                <ErrorBoundary>
+                  <Suspense fallback={<LoadingSpinner message="Loading page..." />}>
+                    {renderPage()}
+                  </Suspense>
+                </ErrorBoundary>
+              </AnimatePresence>
+            </main>
+            
+            <Footer onPageChange={handlePageChange} />
+            <FloatingActions />
+          </div>
         </div>
       </LanguageProvider>
     </ErrorBoundary>
