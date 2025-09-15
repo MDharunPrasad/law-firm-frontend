@@ -530,7 +530,7 @@ html {
 .globe-loading-overlay {
   backdrop-filter: blur(2px);
   background: rgba(0, 0, 0, 0.1);
-=======
+}
 /* Enhanced text contrast for hover effects */
 .whyus-card-title-hover {
   text-shadow: 
