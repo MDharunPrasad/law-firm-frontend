@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { scrollRestoration } from './utils/scrollRestoration';
 
 // Immediate load for critical above-the-fold components
 import { Navigation } from './components/Navigation';
@@ -54,8 +55,28 @@ export default function App() {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
+    // Initialize scroll restoration
+    const cleanup = scrollRestoration.initialize();
+    
+    // Check if there's a saved page in sessionStorage (for refresh)
+    const savedPage = sessionStorage.getItem('currentPage');
+    if (savedPage && savedPage !== currentPage) {
+      setCurrentPage(savedPage);
+      scrollRestoration.setCurrentPage(savedPage);
+    } else {
+      scrollRestoration.setCurrentPage(currentPage);
+    }
+
     // Simple initialization
-    const timer = setTimeout(() => setIsInitialLoad(false), 600);
+    const timer = setTimeout(() => {
+      setIsInitialLoad(false);
+      // Restore scroll position after initial load
+      if (savedPage) {
+        setTimeout(() => {
+          scrollRestoration.restoreScrollPosition(savedPage, false);
+        }, 100);
+      }
+    }, 600);
 
     // Register service worker
     if ('serviceWorker' in navigator) {
@@ -94,27 +115,32 @@ export default function App() {
 
     return () => {
       clearTimeout(timer);
+      cleanup(); // Cleanup scroll restoration
     };
   }, [currentPage]);
 
   const handlePageChange = useCallback((page: string) => {
-    // Simple page navigation
+    // Save current scroll position before changing page
+    scrollRestoration.saveScrollPosition(currentPage);
+    
+    // Save current page to sessionStorage for refresh persistence
     try {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+      sessionStorage.setItem('currentPage', page);
     } catch (error) {
-      // Fallback for environments that don't support smooth scroll
-      try {
-        window.scrollTo(0, 0);
-      } catch (fallbackError) {
-        console.warn('Failed to scroll to top:', fallbackError);
-      }
+      console.warn('Failed to save current page:', error);
     }
     
+    // Update scroll restoration current page
+    scrollRestoration.setCurrentPage(page);
+    
+    // Change page
     setCurrentPage(page);
-  }, []);
+    
+    // Restore or scroll to top after a brief delay for page transition
+    setTimeout(() => {
+      scrollRestoration.restoreScrollPosition(page, true);
+    }, 150);
+  }, [currentPage]);
 
   const handleContactClick = useCallback(() => {
     handlePageChange('contact');
