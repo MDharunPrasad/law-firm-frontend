@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import { scrollRestoration } from './utils/scrollRestoration';
 
 // Immediate load for critical above-the-fold components
 import { Navigation } from './components/Navigation';
@@ -98,28 +97,8 @@ export default function App() {
   };
 
   useEffect(() => {
-    // Initialize scroll restoration
-    const cleanup = scrollRestoration.initialize();
-    
-    // Check if there's a saved page in sessionStorage (for refresh)
-    const savedPage = sessionStorage.getItem('currentPage');
-    if (savedPage && savedPage !== currentPage) {
-      setCurrentPage(savedPage);
-      scrollRestoration.setCurrentPage(savedPage);
-    } else {
-      scrollRestoration.setCurrentPage(currentPage);
-    }
-
     // Simple initialization
-    const timer = setTimeout(() => {
-      setIsInitialLoad(false);
-      // Restore scroll position after initial load
-      if (savedPage) {
-        setTimeout(() => {
-          scrollRestoration.restoreScrollPosition(savedPage, false);
-        }, 100);
-      }
-    }, 600);
+    const timer = setTimeout(() => setIsInitialLoad(false), 600);
 
     // Register service worker
     if ('serviceWorker' in navigator) {
@@ -156,34 +135,30 @@ export default function App() {
 
     updatePageTitle();
 
+    // Ensure scroll position is at top when page changes
+    const scrollToTop = () => {
+      try {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      } catch (error) {
+        console.warn('Failed to scroll to top on page change:', error);
+      }
+    };
+
+    // Add a small delay to ensure DOM is ready
+    const scrollTimer = setTimeout(scrollToTop, 100);
+
     return () => {
       clearTimeout(timer);
-      cleanup(); // Cleanup scroll restoration
+      clearTimeout(scrollTimer);
     };
   }, [currentPage]);
 
   const handlePageChange = useCallback((page: string) => {
-    // Save current scroll position before changing page
-    scrollRestoration.saveScrollPosition(currentPage);
-    
-    // Save current page to sessionStorage for refresh persistence
-    try {
-      sessionStorage.setItem('currentPage', page);
-    } catch (error) {
-      console.warn('Failed to save current page:', error);
-    }
-    
-    // Update scroll restoration current page
-    scrollRestoration.setCurrentPage(page);
-    
-    // Change page
+    // Set the page first, then scroll will happen in onExitComplete
     setCurrentPage(page);
-    
-    // Restore or scroll to top after a brief delay for page transition
-    setTimeout(() => {
-      scrollRestoration.restoreScrollPosition(page, true);
-    }, 150);
-  }, [currentPage]);
+  }, []);
 
   const handleContactClick = useCallback(() => {
     handlePageChange('contact');
@@ -312,8 +287,21 @@ export default function App() {
               <AnimatePresence 
                 mode="wait" 
                 onExitComplete={() => {
+                  // Force scroll to top with multiple approaches for reliability
                   try {
+                    // Method 1: Instant scroll
                     window.scrollTo(0, 0);
+                    
+                    // Method 2: Set scroll on document element
+                    document.documentElement.scrollTop = 0;
+                    document.body.scrollTop = 0;
+                    
+                    // Method 3: Use requestAnimationFrame to ensure it happens after render
+                    requestAnimationFrame(() => {
+                      window.scrollTo(0, 0);
+                      document.documentElement.scrollTop = 0;
+                      document.body.scrollTop = 0;
+                    });
                   } catch (error) {
                     console.warn('Failed to scroll to top:', error);
                   }
