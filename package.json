@@ -63,6 +63,8 @@
       "scripts": {
             "dev": "vite",
             "build": "vite build",
-            "preview": "vite preview"
+            "preview": "vite preview",
+            "reset": "rm -rf node_modules/.vite && rm -rf node_modules/.cache && rm -rf dist && rm -rf build && npm run dev",
+            "fresh-start": "pkill -f 'vite|3002|3003|3004' || true && npm run reset"
       }
 }

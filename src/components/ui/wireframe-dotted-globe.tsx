@@ -21,6 +21,9 @@ const WireframeDottedGlobe: React.FC<WireframeDottedGlobeProps> = ({
   className = '',
   globeConfig = {}
 }) => {
+  // Version identifier: v2.0 - Interactive Auto-Rotating Globe
+  console.log('Globe Component Version: v2.0 - Interactive Auto-Rotating Globe');
+  
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const animationRef = useRef<number>();
