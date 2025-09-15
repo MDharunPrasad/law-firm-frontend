@@ -121,20 +121,20 @@ function Contact() {
   ], [t]);
 
   return (
-    <section className="py-16 lg:py-24 bg-neutral-bg" role="main" aria-labelledby="contact-heading">
+    <section className="pt-20 pb-16 lg:pt-16 lg:pb-20 bg-neutral-bg" role="main" aria-labelledby="contact-heading">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
-          className={`text-center mb-16 lg:mb-20 ${isRTL ? 'text-right' : 'text-left'}`}
+          className="text-center mb-8 lg:mb-10"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
           viewport={{ once: true }}
         >
-          <h1 id="contact-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold text-navy-primary mb-6 lg:mb-8">
+          <h1 id="contact-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold text-navy-primary mb-4 lg:mb-6 text-center">
             {t('contact.title')}
           </h1>
-          <p className="text-xl lg:text-2xl text-neutral-muted max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl lg:text-2xl text-neutral-muted max-w-4xl mx-auto leading-relaxed text-center">
             {t('contact.subtitle')}
           </p>
         </motion.div>
@@ -216,9 +216,10 @@ function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
             viewport={{ once: true }}
+            className="h-full flex"
           >
-            <Card className="shadow-2xl border-0 bg-surface-elevated">
-              <CardHeader className="text-center lg:text-left">
+            <Card className="shadow-2xl border-0 bg-surface-elevated w-full flex flex-col">
+              <CardHeader className="text-center lg:text-left flex-shrink-0">
                 <CardTitle className={`text-2xl lg:text-3xl font-bold text-navy-primary ${isRTL ? 'text-right' : 'text-left'}`}>
                   Send us a Message
                 </CardTitle>
@@ -226,7 +227,7 @@ function Contact() {
                   Fill out the form below and we'll get back to you within 24 hours.
                 </p>
               </CardHeader>
-              <CardContent>
+              <CardContent className="flex-grow flex flex-col justify-between">
                 {/* Success/Error Messages */}
                 {submitStatus === 'success' && (
                   <motion.div
@@ -400,6 +401,9 @@ function Contact() {
             </Card>
           </motion.div>
         </div>
+        
+        {/* Extra spacing before footer */}
+        <div className="h-24 lg:h-32"></div>
       </div>
     </section>
   );
