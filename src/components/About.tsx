@@ -15,35 +15,27 @@ export function About({ showCoreValues = false }: AboutProps) {
   const coreValues = [
     {
       icon: Award,
-      title: t('about.goal.excellence.title'),
-      description: t('about.goal.excellence.desc'),
-      gradient: 'from-blue-500 to-blue-600',
-      bgColor: 'bg-blue-50',
-      iconColor: 'text-blue-600'
+      title: 'Legal Excellence',
+      description: 'Delivering exceptional legal services with precision, expertise, and unwavering attention to detail in every case we handle.',
+      iconColor: 'text-navy-primary'
     },
     {
       icon: Shield,
-      title: t('about.goal.integrity.title'),
-      description: t('about.goal.integrity.desc'),
-      gradient: 'from-emerald-500 to-emerald-600',
-      bgColor: 'bg-emerald-50',
-      iconColor: 'text-emerald-600'
+      title: 'Professional Integrity',
+      description: 'Maintaining the highest ethical standards and building trust through transparent, honest, and reliable legal counsel.',
+      iconColor: 'text-navy-primary'
     },
     {
       icon: Lightbulb,
-      title: t('about.goal.innovation.title'),
-      description: t('about.goal.innovation.desc'),
-      gradient: 'from-amber-500 to-amber-600',
-      bgColor: 'bg-amber-50',
-      iconColor: 'text-amber-600'
+      title: 'Innovative Solutions',
+      description: 'Leveraging cutting-edge legal strategies and modern technology to provide efficient and effective solutions.',
+      iconColor: 'text-navy-primary'
     },
     {
       icon: Heart,
-      title: t('about.goal.clientFocus.title'),
-      description: t('about.goal.clientFocus.desc'),
-      gradient: 'from-rose-500 to-rose-600',
-      bgColor: 'bg-rose-50',
-      iconColor: 'text-rose-600'
+      title: 'Client-Centered Approach',
+      description: 'Placing our clients at the heart of everything we do, ensuring personalized service and exceptional results.',
+      iconColor: 'text-navy-primary'
     }
   ];
 
@@ -77,11 +69,11 @@ export function About({ showCoreValues = false }: AboutProps) {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <ImageWithFallback
-                src="https://images.unsplash.com/photo-1756412066323-a336d2becc10?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBsYXd5ZXIlMjBwb3J0cmFpdCUyMHNhdWRpfGVufDF8fHx8MTc1NzQ4MjgwOXww&ixlib=rb-4.1.0&q=80&w=1080"
-                alt="Professional legal consultation"
-                className="w-full h-64 sm:h-80 lg:h-96 object-cover"
+                src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTU2fDB8MXxzZWFyY2h8NXx8YnVzaW5lc3MlMjBtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3MzQzNjI0OTh8MA&ixlib=rb-4.1.0&q=80&w=1080"
+                alt="Professional businessman smiling portrait"
+                className="w-full h-64 sm:h-80 lg:h-96 object-cover object-center"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-primary/60 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-primary/5 to-transparent"></div>
             </div>
             
             {/* Floating Stats Card */}
@@ -109,7 +101,7 @@ export function About({ showCoreValues = false }: AboutProps) {
           viewport={{ once: true }}
         >
           {/* Section Header */}
-          <div className={`text-center mb-12 lg:mb-16 ${isRTL ? 'text-right' : 'text-left'}`}>
+          <div className="text-center mb-12 lg:mb-16">
             <motion.h3 
               className="text-3xl md:text-4xl lg:text-5xl font-bold text-navy-primary mb-4 lg:mb-6"
               initial={{ opacity: 0, y: 20 }}
@@ -117,12 +109,12 @@ export function About({ showCoreValues = false }: AboutProps) {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              {t('about.goal.title')}
+              Our Core Values
             </motion.h3>
             <motion.div 
               className="w-24 lg:w-32 h-1 bg-gold-accent mx-auto rounded-full mb-6"
               initial={{ width: 0 }}
-              whileInView={{ width: isRTL ? '8rem' : '8rem' }}
+              whileInView={{ width: '8rem' }}
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
             />
@@ -144,61 +136,60 @@ export function About({ showCoreValues = false }: AboutProps) {
               return (
                 <motion.div
                   key={value.title}
-                  className="group relative gpu-accelerated"
+                  className="group relative"
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  whileHover={{ y: -4 }}
+                  whileHover={{ y: -8, scale: 1.02 }}
                 >
-                  <div className={`relative h-full ${value.bgColor} rounded-2xl p-6 lg:p-8 transition-all duration-200 group-hover:shadow-2xl border border-gray-100 overflow-hidden`}>
-                    {/* Gradient overlay on hover - optimized for speed */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${value.gradient} opacity-0 group-hover:opacity-95 transition-opacity duration-200 rounded-2xl`} />
+                  <div className="relative h-full bg-white rounded-2xl p-6 lg:p-8 transition-all duration-300 group-hover:shadow-2xl border border-gray-200 group-hover:border-gold-accent/30 overflow-hidden min-h-[280px] flex flex-col">
+                    {/* Subtle gradient overlay on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-gold-accent/5 to-navy-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
                     
                     {/* Content */}
-                    <div className="relative z-10">
-                      <div className={`flex ${isRTL ? 'justify-end' : 'justify-center'} mb-6`}>
-                        <div className="p-4 bg-white rounded-2xl shadow-lg group-hover:shadow-xl transition-all duration-200 group-hover:scale-105 group-hover:bg-white/95">
-                          <Icon className={`h-8 w-8 lg:h-10 lg:w-10 ${value.iconColor} group-hover:text-gray-800 transition-colors duration-200`} />
+                    <div className="relative z-10 flex flex-col items-center text-center flex-grow">
+                      {/* Icon */}
+                      <div className="flex justify-center mb-6">
+                        <div className="p-4 bg-gradient-to-br from-gold-accent/10 to-gold-accent/20 rounded-2xl shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-110">
+                          <Icon className={`h-8 w-8 lg:h-10 lg:w-10 ${value.iconColor} transition-colors duration-300`} />
                         </div>
                       </div>
                       
-                      <h4 className={`text-xl lg:text-2xl font-bold text-navy-primary mb-4 group-hover:text-white transition-colors duration-200 ${isRTL ? 'text-right' : 'text-center'}`}>
+                      {/* Title */}
+                      <h4 className="text-xl lg:text-2xl font-bold text-navy-primary mb-4 group-hover:text-navy-primary transition-colors duration-300 leading-tight">
                         {value.title}
                       </h4>
                       
-                      <p className={`text-neutral-muted leading-relaxed text-sm lg:text-base group-hover:text-white/90 transition-colors duration-200 ${isRTL ? 'text-right' : 'text-left'}`}>
+                      {/* Description */}
+                      <p className="text-neutral-muted leading-relaxed text-sm lg:text-base group-hover:text-neutral-secondary transition-colors duration-300 flex-grow">
                         {value.description}
                       </p>
                     </div>
 
-                    {/* Simplified decorative elements for better performance */}
-                    <div className={`absolute top-0 ${isRTL ? 'left-0' : 'right-0'} w-16 h-16 bg-white/10 rounded-full ${isRTL ? '-translate-y-8 -translate-x-8' : '-translate-y-8 translate-x-8'} group-hover:scale-125 transition-transform duration-300`} />
+                    {/* Decorative corner element */}
+                    <div className="absolute top-4 right-4 w-8 h-8 bg-gold-accent/10 rounded-full group-hover:bg-gold-accent/20 group-hover:scale-125 transition-all duration-300" />
                   </div>
                 </motion.div>
               );
             })}
           </div>
 
-          {/* Mission Statement */}
+          {/* Our Mission Section */}
           <motion.div
-            className="bg-gradient-to-r from-navy-primary to-blue-supportive rounded-2xl lg:rounded-3xl p-8 lg:p-12 text-center relative overflow-hidden mb-16"
+            className="relative h-[400px] md:h-[500px] lg:h-[600px] w-full flex items-center justify-center overflow-hidden rounded-xl border border-gray-200 bg-navy-primary"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
             viewport={{ once: true }}
           >
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-y-12" />
-            </div>
-            
-            <div className="relative z-10">
-              <h4 className="text-2xl lg:text-3xl font-bold text-white mb-4 lg:mb-6">
-                {t('about.mission.title')}
-              </h4>
+            <ShaderAnimation />
+            <div className="absolute z-10 text-center px-4">
+              <h3 className="text-2xl md:text-4xl lg:text-6xl leading-none font-bold tracking-tight text-white mb-4">
+                Our Mission
+              </h3>
               <p className="text-white/90 text-base lg:text-lg leading-relaxed max-w-4xl mx-auto mb-8">
-                {t('about.mission.desc')}
+                To be the leading law firm in Saudi Arabia, recognized for our expertise, integrity, and commitment to delivering exceptional legal services that exceed client expectations.
               </p>
               
               <Button
@@ -210,27 +201,8 @@ export function About({ showCoreValues = false }: AboutProps) {
                   }
                 }}
               >
-                {t('about.consultation.button')}
+                Schedule Consultation
               </Button>
-            </div>
-          </motion.div>
-
-          {/* Shader Animation Section */}
-          <motion.div
-            className="relative h-[400px] md:h-[500px] lg:h-[600px] w-full flex items-center justify-center overflow-hidden rounded-xl border border-gray-200 bg-navy-primary"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <ShaderAnimation />
-            <div className="absolute pointer-events-none z-10 text-center px-4">
-              <h3 className="text-2xl md:text-4xl lg:text-6xl leading-none font-bold tracking-tight text-white mb-4">
-                Legal Innovation
-              </h3>
-              <p className="text-white/80 text-sm md:text-base lg:text-lg max-w-2xl mx-auto">
-                Cutting-edge technology meets traditional legal excellence
-              </p>
             </div>
           </motion.div>
         </motion.div>
