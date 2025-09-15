@@ -32,8 +32,8 @@ const WireframeDottedGlobe: React.FC<WireframeDottedGlobeProps> = ({
   const config = {
     radius: 200,
     enablePointerInteraction: true,
-    enableAutoRotate: true,
-    autoRotateSpeed: 0.5,
+    enableAutoRotate: false,
+    autoRotateSpeed: 0.3,
     phi: 0,
     theta: 0,
     baseColor: '#D4AF37', // Gold color
@@ -98,6 +98,7 @@ const WireframeDottedGlobe: React.FC<WireframeDottedGlobeProps> = ({
     // Draw latitude lines
     const latitudes = [-60, -30, 0, 30, 60];
     latitudes.forEach(lat => {
+      const graticule = d3.geoGraticule().stepMinor([360, 90]).stepMajor([360, 90]);
       const latLine = {
         type: "LineString",
         coordinates: d3.range(-180, 181, 5).map(lng => [lng, lat])
@@ -136,10 +137,26 @@ const WireframeDottedGlobe: React.FC<WireframeDottedGlobeProps> = ({
       for (let lng = -180; lng <= 180; lng += dotSpacing) {
         const coords = projection([lng, lat]);
         if (coords) {
-          // Simple visibility check: just draw all dots for now
-          ctx.beginPath();
-          ctx.arc(coords[0], coords[1], 1, 0, 2 * Math.PI);
-          ctx.fill();
+          // Check if point is on visible hemisphere
+          try {
+            const invertFn = projection.invert;
+            if (invertFn) {
+              const center = invertFn([centerX, centerY]);
+              if (center) {
+                const sphere = d3.geoDistance([lng, lat], center);
+                if (sphere < Math.PI / 2) {
+                  ctx.beginPath();
+                  ctx.arc(coords[0], coords[1], 1, 0, 2 * Math.PI);
+                  ctx.fill();
+                }
+              }
+            }
+          } catch {
+            // Fallback: just draw the dot
+            ctx.beginPath();
+            ctx.arc(coords[0], coords[1], 1, 0, 2 * Math.PI);
+            ctx.fill();
+          }
         }
       }
     }
@@ -184,11 +201,11 @@ const WireframeDottedGlobe: React.FC<WireframeDottedGlobeProps> = ({
     if (!isDragging || !config.enablePointerInteraction) return;
 
     const deltaX = e.clientX - lastMouse.x;
+    const deltaY = e.clientY - lastMouse.y;
 
-    // Only allow horizontal rotation (spinning)
     setRotation(prev => ({
       x: prev.x + deltaX * 0.5,
-      y: prev.y // Keep vertical rotation unchanged
+      y: Math.max(-90, Math.min(90, prev.y + deltaY * 0.5))
     }));
 
     setLastMouse({ x: e.clientX, y: e.clientY });
@@ -217,11 +234,11 @@ const WireframeDottedGlobe: React.FC<WireframeDottedGlobeProps> = ({
     e.preventDefault();
     const touch = e.touches[0];
     const deltaX = touch.clientX - lastMouse.x;
+    const deltaY = touch.clientY - lastMouse.y;
 
-    // Only allow horizontal rotation (spinning)
     setRotation(prev => ({
       x: prev.x + deltaX * 0.5,
-      y: prev.y // Keep vertical rotation unchanged
+      y: Math.max(-90, Math.min(90, prev.y + deltaY * 0.5))
     }));
 
     setLastMouse({ x: touch.clientX, y: touch.clientY });
@@ -317,6 +334,13 @@ const WireframeDottedGlobe: React.FC<WireframeDottedGlobeProps> = ({
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
           />
+        </div>
+      )}
+      
+      {/* Interaction hint */}
+      {config.enablePointerInteraction && isLoaded && (
+        <div className="absolute bottom-2 left-2 text-xs text-gray-400 opacity-60">
+          Drag to rotate • Scroll to zoom
         </div>
       )}
     </motion.div>

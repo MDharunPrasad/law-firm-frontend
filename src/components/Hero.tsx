@@ -3,7 +3,7 @@ import { Button } from './ui/button';
 import { ArrowRight, Scale, Shield, Users } from 'lucide-react';
 import { ProfessionalBackground } from './ProfessionalBackground';
 import { useLanguage } from '../contexts/LanguageContext';
-import RotatingEarth from './ui/wireframe-dotted-globe';
+import WireframeDottedGlobe from './ui/wireframe-dotted-globe.tsx';
 
 interface HeroProps {
   onContactClick: () => void;
@@ -114,11 +114,20 @@ export function Hero({ onContactClick }: HeroProps) {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 1 }}
           >
-            <RotatingEarth 
-              width={600} 
-              height={600} 
-              className="w-full max-w-lg mx-auto"
-            />
+            <div className="ml-8"> {/* Move globe to the right */}
+              <WireframeDottedGlobe 
+                className="w-full max-w-lg mx-auto h-96"
+                globeConfig={{
+                  radius: 150,
+                  enablePointerInteraction: true,
+                  enableAutoRotate: true,
+                  autoRotateSpeed: 0.5,
+                  baseColor: '#D4AF37',
+                  glowColor: '#F4D03F',
+                  backgroundColor: 'transparent'
+                }}
+              />
+            </div>
           </motion.div>
         </div>
       </div>
