@@ -69,11 +69,11 @@ export function About({ showCoreValues = false }: AboutProps) {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <ImageWithFallback
-                src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTU2fDB8MXxzZWFyY2h8NXx8YnVzaW5lc3MlMjBtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3MzQzNjI0OTh8MA&ixlib=rb-4.1.0&q=80&w=1080"
-                alt="Professional businessman smiling portrait"
+                src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDU5fDB8MXxzZWFyY2h8MXx8cHJvZmVzc2lvbmFsJTIwYnVzaW5lc3MlMjBtYW4lMjBzdWl0fGVufDB8fHx8MTczNDM2Mjk0MHww&ixlib=rb-4.1.0&q=80&w=1080"
+                alt="Professional businessman in elegant suit"
                 className="w-full h-64 sm:h-80 lg:h-96 object-cover object-center"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-primary/5 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-primary/25 to-transparent"></div>
             </div>
             
             {/* Floating Stats Card */}
